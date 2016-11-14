@@ -137,7 +137,7 @@ end
 
 def team_colors(team_name)
   game_hash.each do |team, team_hash|
-    if team_hash[:name] == team_name
+    if team_hash[:team_name] == team_name
       return (team_hash[:colors].collect do |color|
         color
       end)
@@ -157,6 +157,32 @@ def player_numbers(team_name)
       return (team_hash[:players].collect do |player, player_hash|
         player_hash[:number]
       end)
+    end
+  end
+end
+
+def player_stats(player_name)
+  game_hash.each do |team, team_hash|
+    team_hash.each do |player, player_hash|
+      if player_hash[:name] == player_name
+        return player_hash[:name].values
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+biggest_player = nil
+  game_hash.each do |team, team_hash|
+    team_hash.each do |player, player_hash|
+      biggest_player = player_hash[:shoe].values.max
+    end
+  end
+  game_hash.each do |team, team_hash|
+    team_hash.each do |player, player_hash|
+      if player_hash[:name] == biggest_player
+        return player_hash[:name][:rebounds]
+      end
     end
   end
 end
